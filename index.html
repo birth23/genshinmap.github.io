@@ -548,6 +548,7 @@ function readText(filePath,callBack) {
     if(filePath.files && filePath.files[0]) {           
         reader.onload = function (e) {
             output = e.target.result;
+			var jsonData = JSON.parse(output)
             callBack(output);
         };//end onload()
         reader.readAsText(filePath.files[0]);
@@ -569,8 +570,9 @@ function readText(filePath,callBack) {
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
+				openFile()
 				
-				var jsonData = JSON.parse(openFile)
+				//var jsonData = JSON.parse()
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
