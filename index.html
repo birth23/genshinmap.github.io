@@ -488,19 +488,49 @@ function download(content, fileName, contentType) {
     a.download = fileName;
     a.click();
 }
+  function loadFile() {
+    var input, file, fr;
 
+    if (typeof window.FileReader !== 'function') {
+      alert("The file API isn't supported on this browser yet.");
+      return;
+    }
 
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = receivedText;
+      fr.readAsText(file);
+    }
 
+    function receivedText(e) {
+      let lines = e.target.result;
+      var jsonData = JSON.parse(lines); 
+    }
+  }
+  
+  
 			$(".export-btn").click(function (){
-			download(JSON.stringify(window.localStorage), 'SavedMap.txt', 'text/plain');
+			download(JSON.stringify(window.localStorage), 'GIMapData.txt', 'text/plain');
 				// prompt("Copy the below text: ", JSON.stringify(window.localStorage))
 			});
 			
 			
 			
 			$(".load-btn").click(function (){
-				var text = prompt("Input exported data: ")
-				var jsonData = JSON.parse(text)
+			//	var text = prompt("Input exported data: ")
+			//	var jsonData = JSON.parse(text)
+				loadFile()
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
@@ -508,6 +538,18 @@ function download(content, fileName, contentType) {
 				alert("Import Done");
 				document.location.reload(true)
 			});
+			
+	
+			//$(".load-btn").click(function (){
+			//	var text = prompt("Input exported data: ")
+			//	var jsonData = JSON.parse(text)
+			//	for (const [key, value] of Object.entries(jsonData)) {
+			//		console.log(`${key}: ${value}`);
+			//		window.localStorage.setItem(key, value);
+			//	}
+			//	alert("Import Done");
+			//	document.location.reload(true)
+			//});
 	
 			$(".save-btn").click(function () {
 				var markedLog = []
