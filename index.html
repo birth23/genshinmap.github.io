@@ -520,6 +520,34 @@ function download(content, fileName, contentType) {
   }
   
   
+  
+  function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'my_data.json', true);
+    // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function() {
+        if (xobj.readyState === 4 && xobj.status === 200) {
+            // Required use of an anonymous callback 
+            // as .open() will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+function init() {
+    loadJSON(function(response) {
+        // Parse JSON string into object
+        var jsonData = JSON.parse(response);
+    });
+}
+  
+  
+  
+  
+  
+  
 			$(".export-btn").click(function (){
 			download(JSON.stringify(window.localStorage), 'GIMapData.txt', 'text/plain');
 				// prompt("Copy the below text: ", JSON.stringify(window.localStorage))
@@ -530,7 +558,7 @@ function download(content, fileName, contentType) {
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				loadFile()
+				loadJSON(callback)
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
