@@ -521,31 +521,42 @@ function download(content, fileName, contentType) {
   
   
   
-  function loadJSON(callback) {
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'my_data.json', true);
-    // Replace 'my_data' with the path to your file
-    xobj.onreadystatechange = function() {
-        if (xobj.readyState === 4 && xobj.status === 200) {
-            // Required use of an anonymous callback 
-            // as .open() will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
+function openFile(callBack){
+  var element = document.createElement('input');
+  element.setAttribute('type', "file");
+  element.setAttribute('id', "btnOpenFile");
+  element.onchange = function(){
+      readText(this,callBack);
+      document.body.removeChild(this);
+      }
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
 }
 
-function init() {
-    loadJSON(function(response) {
-        // Parse JSON string into object
-        var jsonData = JSON.parse(response);
-    });
+function readText(filePath,callBack) {
+    var reader;
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        reader = new FileReader();
+    } else {
+        alert('The File APIs are not fully supported by your browser. Fallback required.');
+        return false;
+    }
+    var output = ""; //placeholder for text output
+    if(filePath.files && filePath.files[0]) {           
+        reader.onload = function (e) {
+            output = e.target.result;
+            callBack(output);
+        };//end onload()
+        reader.readAsText(filePath.files[0]);
+    }//end if html5 filelist support
+    else { //this is where you could fallback to Java Applet, Flash or similar
+        return false;
+    }       
+    return true;
 }
-  
-  
-  
-  
   
   
 			$(".export-btn").click(function (){
@@ -558,7 +569,8 @@ function init() {
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				loadJSON(callback)
+				openFile()
+				var jsonData = JSON.parse(text)
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
