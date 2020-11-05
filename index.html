@@ -568,6 +568,7 @@ function readText(filePath,callBack) {
 							document.getElementById('btnOpen').onclick = function(){
     openFile(function(txt){
         document.getElementById('tbMain').value = txt; 
+		console.log(txt)
     });
 }
 				
