@@ -569,8 +569,8 @@ function readText(filePath,callBack) {
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				openFile()
-				var jsonData = JSON.parse(text)
+				
+				var jsonData = JSON.parse(openFile)
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
