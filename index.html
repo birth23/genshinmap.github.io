@@ -568,9 +568,9 @@ function readText(filePath,callBack) {
 			//	var jsonData = JSON.parse(text)
 				
 			    openFile(function(txt){
-        document.getElementById('tbMain').value = txt; 
+        //document.getElementById('tbMain').value = txt; 
 		var jsonData = txt.parse()
-    });
+   
 				
 				//var jsonData = txt.parse()
 				for (const [key, value] of Object.entries(jsonData)) {
@@ -580,7 +580,7 @@ function readText(filePath,callBack) {
 				alert("Import Done");
 				document.location.reload(true)
 			});
-			
+			 });
 	
 			//$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
