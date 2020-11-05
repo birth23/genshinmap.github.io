@@ -566,20 +566,17 @@ function readText(filePath,callBack) {
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				
-			    openFile(function(txt){
-        //document.getElementById('tbMain').value = txt; 
-		var jsonData = txt.parse()
-   
-				
-				//var jsonData = txt.parse()
+				openFile
+ 
+				console.log(txt)
+				var jsonData = txt.parse()
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
 				}
 				alert("Import Done");
 				document.location.reload(true)
-			});
+			
 			 });
 	
 			//$(".load-btn").click(function (){
