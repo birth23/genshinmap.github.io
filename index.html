@@ -561,23 +561,32 @@ function readText(filePath,callBack) {
 				// prompt("Copy the below text: ", JSON.stringify(window.localStorage))
 			});
 			
-			
+
 
 			$(".load-btn").click(function (){
+				
+							document.getElementById('btnOpen').onclick = function(){
+    openFile(function(txt){
+        document.getElementById('tbMain').value = txt; 
+    });
+}
+				
+				
+				
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				openFile
+				//openFile(
  
-				console.log(txt)
-				var jsonData = txt.parse()
-				for (const [key, value] of Object.entries(jsonData)) {
-					console.log(`${key}: ${value}`);
-					window.localStorage.setItem(key, value);
-				}
-				alert("Import Done");
-				document.location.reload(true)
+			//	console.log(txt)
+			//	var jsonData = txt.parse()
+				//for (const [key, value] of Object.entries(jsonData)) {
+					//console.log(`${key}: ${value}`);
+				//	window.localStorage.setItem(key, value);
+			//	}
+				//alert("Import Done");
+			//	document.location.reload(true)
 			
-			 });
+		//	 });
 	
 			//$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
