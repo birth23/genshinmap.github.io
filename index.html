@@ -481,9 +481,23 @@
 			}
 
 
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
+
+
 			$(".export-btn").click(function (){
-				prompt("Copy the below text: ", JSON.stringify(window.localStorage))
+			download(JSON.stringify(window.localStorage), 'SavedMap.txt', 'text/plain');
+				// prompt("Copy the below text: ", JSON.stringify(window.localStorage))
 			});
+			
+			
+			
 			$(".load-btn").click(function (){
 				var text = prompt("Input exported data: ")
 				var jsonData = JSON.parse(text)
@@ -494,8 +508,7 @@
 				alert("Import Done");
 				document.location.reload(true)
 			});
-
-			//下载保存数据并复制到剪切板				
+	
 			$(".save-btn").click(function () {
 				var markedLog = []
 				for (var i = 0; i < 29; i++) {
