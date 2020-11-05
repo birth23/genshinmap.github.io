@@ -519,9 +519,7 @@ function download(content, fileName, contentType) {
     }
   }
   
-  
-  
-function openFile(callBack){
+  function openFile(callBack){
   var element = document.createElement('input');
   element.setAttribute('type', "file");
   element.setAttribute('id', "btnOpenFile");
@@ -548,7 +546,6 @@ function readText(filePath,callBack) {
     if(filePath.files && filePath.files[0]) {           
         reader.onload = function (e) {
             output = e.target.result;
-			var jsonData = JSON.parse(output)
             callBack(output);
         };//end onload()
         reader.readAsText(filePath.files[0]);
@@ -558,21 +555,24 @@ function readText(filePath,callBack) {
     }       
     return true;
 }
-  
-  
+   
 			$(".export-btn").click(function (){
 			download(JSON.stringify(window.localStorage), 'GIMapData.txt', 'text/plain');
 				// prompt("Copy the below text: ", JSON.stringify(window.localStorage))
 			});
 			
 			
-			
+
 			$(".load-btn").click(function (){
 			//	var text = prompt("Input exported data: ")
 			//	var jsonData = JSON.parse(text)
-				openFile()
 				
-				//var jsonData = JSON.parse()
+			    openFile(function(txt){
+        document.getElementById('tbMain').value = txt; 
+		var jsonData = txt.parse()
+    });
+				
+				//var jsonData = txt.parse()
 				for (const [key, value] of Object.entries(jsonData)) {
 					console.log(`${key}: ${value}`);
 					window.localStorage.setItem(key, value);
